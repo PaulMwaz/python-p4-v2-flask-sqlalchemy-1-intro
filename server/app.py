@@ -1,25 +1,22 @@
-# server/app.py
-
 from flask import Flask
 from flask_migrate import Migrate
+from models import db  # Import the database instance from models.py
 
-from models import db
-
-# create a Flask application instance
+# Create a Flask application instance
 app = Flask(__name__)
 
-# configure the database connection to the local file app.db
+# Set up the database connection (using SQLite as the database engine)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
-# configure flag to disable modification tracking and use less memory
+# Disable SQLAlchemy's modification tracking feature to reduce memory usage
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# create a Migrate object to manage schema modifications
+# Initialize Flask-Migrate to handle database migrations
 migrate = Migrate(app, db)
 
-# initialize the Flask application to use the database
+# Link the database instance to the Flask app
 db.init_app(app)
 
-
 if __name__ == '__main__':
+    # Start the Flask development server on port 5555 with debugging enabled
     app.run(port=5555, debug=True)
